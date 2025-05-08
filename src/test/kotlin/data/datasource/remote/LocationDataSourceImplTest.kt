@@ -1,9 +1,9 @@
-package org.example.data.datasource.remote
+package data.datasource.remote
 
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
-import org.example.domain.entities.Location
 import org.example.data.datasource.LocationDataSource
+import org.example.data.datasource.remote.LocationDataSourceImpl
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
@@ -13,19 +13,7 @@ class LocationDataSourceImplTest {
 
     @BeforeEach
     fun setUp() {
-        dataSource = object : LocationDataSource {
-            override suspend fun getLocationByCityAndCountry(city: String, country: String): Location =
-                if (city == "Cairo" && country == "Egypt") {
-                    Location(
-                        city = "Cairo",
-                        country = "Egypt",
-                        latitude = 30.0444,
-                        longitude = 31.2357
-                    )
-                } else {
-                    throw IllegalArgumentException("Location not found")
-                }
-        }
+       dataSource = LocationDataSourceImpl()
     }
 
 

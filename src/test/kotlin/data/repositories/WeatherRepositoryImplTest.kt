@@ -1,4 +1,4 @@
-package org.example.data.repositories
+package data.repositories
 
 import com.google.common.truth.Truth.assertThat
 import io.mockk.coEvery
@@ -6,6 +6,7 @@ import io.mockk.coVerify
 import io.mockk.mockk
 import kotlinx.coroutines.test.runTest
 import org.example.data.datasource.WeatherDataSource
+import org.example.data.repositories.WeatherRepositoryImpl
 import org.example.domain.entities.Location
 import org.example.domain.entities.WeatherData
 import org.junit.jupiter.api.BeforeEach
