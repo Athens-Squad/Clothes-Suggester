@@ -1,4 +1,4 @@
-package org.example.ui
+package org.example.ui.io
 
 class ConsoleIO(
     val printer: Printer,
