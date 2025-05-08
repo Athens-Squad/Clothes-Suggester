@@ -38,7 +38,7 @@ dependencies {
     implementation("ch.qos.logback:logback-classic:1.5.6")
 
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
-
+    testImplementation("org.junit.jupiter:junit-jupiter:5.8.1")
 }
 
 tasks.test {
