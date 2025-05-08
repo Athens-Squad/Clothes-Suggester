@@ -13,7 +13,7 @@ import org.junit.jupiter.api.assertThrows
 
 class GetClothesSuggestionsUseCaseTest {
     private val weatherRepository = mockk<WeatherRepository>()
-    private val useCase = GetClothesSuggestionsUseCase(weatherRepository)
+    private val useCase = GetClothesSuggestionsUseCase(weatherRepository, listOf()) /*TODO() list of strategies */
 
     @Test
     fun `execute() return  clothes suggestions based on weather`() = runTest {
@@ -30,8 +30,8 @@ class GetClothesSuggestionsUseCaseTest {
         val expected = listOf(
             ClothItem("T-Shirt", ClothType.TOP, ClothWeight.LIGHT),
             ClothItem("Shorts", ClothType.BOTTOM, ClothWeight.LIGHT),
-            ClothItem("Sunglasses", ClothType.TOP, ClothWeight.VERY_LIGHT),
-            ClothItem("Cap or Hat", ClothType.TOP, ClothWeight.LIGHT)
+            ClothItem("Sunglasses", ClothType.ACCESSORY, ClothWeight.LIGHT),
+            ClothItem("Cap or Hat", ClothType.ACCESSORY, ClothWeight.LIGHT)
         )
         coEvery { weatherRepository.getWeatherDataByLocation(location) } returns weather
 
