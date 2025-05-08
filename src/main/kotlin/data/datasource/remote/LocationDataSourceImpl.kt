@@ -1,5 +1,6 @@
-package org.example.data.datasource
+package org.example.data.datasource.remote
 
+import org.example.data.datasource.LocationDataSource
 import org.example.domain.entities.Location
 
 class LocationDataSourceImpl: LocationDataSource {
