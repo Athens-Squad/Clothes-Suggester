@@ -54,7 +54,7 @@ class WeatherRepositoryImplTest {
         // When / Then
         try {
             repository.getWeatherDataByLocation(location)
-            assert(false) // Should not reach this line
+            assert(false)
         } catch (e: Exception) {
             assertThat(e.message).isEqualTo("API Error")
         }

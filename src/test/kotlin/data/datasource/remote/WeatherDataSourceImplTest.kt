@@ -26,7 +26,7 @@ class WeatherDataSourceImplTest {
     @Test
     fun `getWeatherDataByLocation returns weather data successfully`() = runTest {
         // Given
-        val location = Location(latitude = 100.5, longitude =  200.5, city = "Cairo", country =  "Egypt")
+        val location = Location(latitude = 30.0444, longitude =  31.2357, city = "Cairo", country =  "Egypt")
         val expected = WeatherData(temperature = 22.5, windSpeed = 100.5, rain = 20.0, humidity = 5.0, isDay = true)
 
         coEvery { weatherDataSource.getWeatherData(location) } returns expected
@@ -48,7 +48,7 @@ class WeatherDataSourceImplTest {
         // When / Then
         try {
             repository.getWeatherDataByLocation(location)
-            assert(false) // Should not reach here
+            assert(false)
         } catch (e: Exception) {
             assertThat(e.message).isEqualTo("Network error")
         }

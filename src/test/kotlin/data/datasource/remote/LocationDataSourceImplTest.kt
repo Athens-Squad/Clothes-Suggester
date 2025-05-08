@@ -13,12 +13,12 @@ class LocationDataSourceImplTest {
 
     @BeforeEach
     fun setUp() {
-       dataSource = LocationDataSourceImpl()
+        dataSource = LocationDataSourceImpl()
     }
 
 
     @Test
-    fun `getLocationByCityAndCountry returns location when valid city and country`() = runTest {
+    fun `getLocationByCityAndCountry returns location when valid city`() = runTest {
         // Given
         val city = "Cairo"
         val country = "Egypt"
@@ -28,9 +28,44 @@ class LocationDataSourceImplTest {
 
         // Then
         assertThat(result.city).isEqualTo("Cairo")
+    }
+
+    @Test
+    fun `getLocationByCityAndCountry returns location when valid country`() = runTest {
+        // Given
+        val city = "Cairo"
+        val country = "Egypt"
+
+        // When
+        val result = dataSource.getLocationByCityAndCountry(city, country)
+
+        // Then
         assertThat(result.country).isEqualTo("Egypt")
-        assertThat(result.latitude).isEqualTo(30.0444)
+    }
+
+    @Test
+    fun `getLocationByCityAndCountry returns location when valid longitude`() = runTest {
+        // Given
+        val city = "Cairo"
+        val country = "Egypt"
+
+
+        // When
+        val result = dataSource.getLocationByCityAndCountry(city, country)
+
+        // Then
         assertThat(result.longitude).isEqualTo(31.2357)
+    }
+
+    @Test
+    fun `getLocationByCityAndCountry returns location when valid latitude`() = runTest {
+        // Given
+        val city = "Cairo"
+        val country = "Egypt"
+        // When
+        val result = dataSource.getLocationByCityAndCountry(city, country)
+        // Then
+        assertThat(result.latitude).isEqualTo(30.0444)
     }
 
     @Test

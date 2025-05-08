@@ -49,7 +49,7 @@ class LocationRepositoryImplTest {
         // When / Then
         try {
             repository.getLocationByCityAndCountry(city, country)
-            assert(false) // This should not be reached
+            assert(false)
         } catch (e: Exception) {
             assertThat(e.message).isEqualTo("Not found")
         }
