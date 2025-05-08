@@ -40,7 +40,7 @@ class GetLocationByCityAndCountryTest {
                 city,
                 country
             )
-        } throws IllegalArgumentException("City not found")
+        } throws IllegalArgumentException("country not found")
         //when
         val exception = assertThrows<IllegalArgumentException> {
             useCase.execute(city, country)
@@ -67,6 +67,6 @@ class GetLocationByCityAndCountryTest {
             useCase.execute(city, country)
         }
         //then
-        assertThat("Network error").isEqualTo(exception)
+        assertThat("Network failure").isEqualTo(exception)
     }
 }
