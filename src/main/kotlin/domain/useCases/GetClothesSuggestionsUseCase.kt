@@ -1,13 +1,15 @@
 package org.example.domain.useCases
 
-import org.example.domain.entities.ClothItem
-import org.example.domain.entities.Location
+import org.example.domain.entities.*
 import org.example.domain.repositories.WeatherRepository
+import org.example.domain.useCases.strategies.ClothesSuggestionStrategy
 
 class GetClothesSuggestionsUseCase(
-    private val weatherRepository: WeatherRepository
+    private val weatherRepository: WeatherRepository,
+    private val clothesSuggestionStrategies: List<ClothesSuggestionStrategy>
 ) {
     suspend fun execute(location: Location): List<ClothItem> {
-        return emptyList()
+        val weather = weatherRepository.getWeatherDataByLocation(location)
+        return clothesSuggestionStrategies.flatMap { it.suggest(weather) }
     }
 }
