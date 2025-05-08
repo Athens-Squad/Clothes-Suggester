@@ -57,9 +57,9 @@ class ClothesSuggesterCli(
         val country = getStringInput("Enter your country:")
 
         io.printer.printLoader("Fetching weather data for $city, $country...")
-        val location = getLocationByCityAndCountry(city, country)
+        val location = getLocationByCityAndCountry.execute(city, country)
 
-        val suggestions = getClothesSuggestionsUseCase(location)
+        val suggestions = getClothesSuggestionsUseCase.execute(location)
 
         displaySuggestions(suggestions)
     }
@@ -69,14 +69,10 @@ class ClothesSuggesterCli(
         io.printer.printDivider()
     }
 
-
-
     private fun getUserOption(): Int {
         io.printer.printOption("Please choose option : ", false)
         return io.reader.readNumberFromUser()
     }
-
-
 
     private fun displaySuggestions(clothes: List<ClothItem>) {
         if (clothes.isEmpty()) {
@@ -86,7 +82,7 @@ class ClothesSuggesterCli(
 
         io.printer.printCorrectOutput("Based on today’s weather, you should consider wearing:")
         clothes.forEach {
-            io.printer.printPlainText("- ${it.name} [${it.weight}, ${it.type}, ${it.attribute}]")
+            io.printer.printPlainText("- ${it.name} [${it.weight}, ${it.type}]")
         }
     }
 }

@@ -3,18 +3,13 @@ package org.example.domain.entities
 data class ClothItem(
     val name: String,
     val type: ClothType,
-    val weight: ClothWeight,
-    val attribute: WeatherAppropriateClothAttribute
+    val weight: ClothWeight
 )
 
 enum class ClothWeight {
-    LIGHT, MEDIUM, HEAVY
+    VERY_LIGHT, LIGHT, MEDIUM, HEAVY, VERY_HEAVY
 }
 
 enum class ClothType {
     TOP, BOTTOM
-}
-
-enum class WeatherAppropriateClothAttribute {
-    WIND_APPROPRIATE, RAIN_APPROPRIATE
 }
