@@ -3,13 +3,13 @@ package org.example.ui
 import kotlinx.coroutines.runBlocking
 import org.example.domain.entities.ClothItem
 import org.example.domain.useCases.GetClothesSuggestionsUseCase
-import org.example.domain.useCases.GetLocationByCityAndCountry
+import org.example.domain.useCases.GetLocationByCityAndCountryUseCase
 import org.example.ui.io.ConsoleIO
 
 class ClothesSuggesterCli(
     private val io: ConsoleIO,
     private val getClothesSuggestionsUseCase: GetClothesSuggestionsUseCase,
-    private val getLocationByCityAndCountry: GetLocationByCityAndCountry
+    private val getLocationByCityAndCountryUseCase: GetLocationByCityAndCountryUseCase
 ) {
     fun start() = runBlocking {
         printWelcome()
@@ -57,7 +57,7 @@ class ClothesSuggesterCli(
         val country = getStringInput("Enter your country:")
 
         io.printer.printLoader("Fetching weather data for $city, $country...")
-        val location = getLocationByCityAndCountry.execute(city, country)
+        val location = getLocationByCityAndCountryUseCase.execute(city, country)
 
         val suggestions = getClothesSuggestionsUseCase.execute(location)
 

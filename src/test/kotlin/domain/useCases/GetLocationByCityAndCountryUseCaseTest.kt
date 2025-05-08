@@ -4,16 +4,16 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import org.example.domain.entities.Location
 import org.example.domain.repositories.LocationRepository
-import org.example.domain.useCases.GetLocationByCityAndCountry
+import org.example.domain.useCases.GetLocationByCityAndCountryUseCase
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.test.runTest
 import org.junit.jupiter.api.assertThrows
 import kotlin.test.Test
 
-class GetLocationByCityAndCountryTest {
+class GetLocationByCityAndCountryUseCaseTest {
 
     private val locationRepository = mockk<LocationRepository>()
-    private val useCase = GetLocationByCityAndCountry(locationRepository)
+    private val useCase = GetLocationByCityAndCountryUseCase(locationRepository)
 
     @Test
     fun `execute() return location for valid city and country`() = runTest {
