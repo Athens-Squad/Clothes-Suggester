@@ -1,6 +1,7 @@
 package domain.useCases.strategies
 
 import com.google.common.truth.Truth.assertThat
+import domain.useCases.getWeatherData
 import org.example.domain.entities.ClothItem
 import org.example.domain.entities.ClothType
 import org.example.domain.entities.ClothWeight
@@ -17,13 +18,8 @@ class TemperatureClothesSuggestionStrategyTest {
     fun `suggest() returns hot weather clothes when temperature is very hot`() {
 
         //given
-        val weather = WeatherData(
-            temperature = 35.0,
-            windSpeed = 5.0,
-            rain = 0.0,
-            humidity = 30.0,
-            isDay = true
-        )
+          val weatherData = getWeatherData(35.0,5.0,0.0,30.0,true)
+
 
         val expected = listOf(
             ClothItem("T-Shirt", ClothType.TOP, ClothWeight.LIGHT),
@@ -33,7 +29,7 @@ class TemperatureClothesSuggestionStrategyTest {
         )
 
         //when
-        val result = strategy.suggest(weather)
+        val result = strategy.suggest(weatherData)
         //then
         assertThat(result).isEqualTo(expected)
     }

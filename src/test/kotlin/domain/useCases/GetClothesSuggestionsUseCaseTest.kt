@@ -31,13 +31,8 @@ class GetClothesSuggestionsUseCaseTest {
         //given
         val location = Location(30.0444, 31.2357, "Cairo", "Egypt")
 
-        val weather = WeatherData(
-            temperature = 38.0,
-            windSpeed = 10.0,
-            rain = 0.0,
-            humidity = 20.0,
-            isDay = true
-        )
+        val weather = getWeatherData(38.0,10.0,0.0,20.0,true)
+
         val expectedClothes = listOf(
             ClothItem("T-Shirt", ClothType.TOP, ClothWeight.LIGHT),
             ClothItem("Shorts", ClothType.BOTTOM, ClothWeight.LIGHT),
@@ -60,30 +55,29 @@ class GetClothesSuggestionsUseCaseTest {
     fun `execute() throw exception when weather api failed`() = runTest {
         //given
         val location = Location(30.0444, 31.2357, "Cairo", "Egypt")
-        coEvery { weatherRepository.getWeatherDataByLocation(location) } throws RuntimeException("Network error")
+        coEvery { locationRepository.getLocationByCityAndCountry(location.city,location.country) } returns location
         coEvery { weatherRepository.getWeatherDataByLocation(location) } throws RuntimeException("Network error")
 
 
         //when
-        val exception = assertThrows<RuntimeException> {
-            runBlocking {
-                useCase.execute(location.city, location.country)
-            }
+         val exception=assertThrows<RuntimeException> {
+            useCase.execute(location.city, location.country)
         }
         //then
-        assertThat("Network error").isEqualTo(exception.message)
+        assertThat(exception.message).isEqualTo("Network error")
     }
 
     @Test
     fun `execute() throw exception when location not found`() = runTest {
         //given
         val location = Location(0.0, 0.0, "Unknown", "Nowhere")
+        coEvery { locationRepository.getLocationByCityAndCountry(location.city,location.country) } returns location
         coEvery { weatherRepository.getWeatherDataByLocation(location) } throws IllegalArgumentException("Location not found")
         //when
-        val exception = assertThrows<IllegalArgumentException> {
+         val exception= assertThrows<IllegalArgumentException> {
             useCase.execute(location.city, location.country)
         }
         //then
-        assertThat("Location not found").isEqualTo(exception.message)
+        assertThat(exception.message).isEqualTo("Location not found")
     }
 }
