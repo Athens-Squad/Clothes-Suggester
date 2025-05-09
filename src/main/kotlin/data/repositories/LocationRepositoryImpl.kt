@@ -1,6 +1,6 @@
 package org.example.data.repositories
 
-import org.example.data.Mapper.LocationMapper
+import org.example.data.mapper.LocationMapper
 import org.example.data.datasource.LocationDataSource
 import org.example.data.dto.LocationDto
 import org.example.domain.entities.Location

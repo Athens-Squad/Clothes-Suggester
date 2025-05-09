@@ -10,8 +10,7 @@ class GetLocationByCityAndCountry(
         return Location(
             0.0,
             0.0,
-            "",
-            ""
+
         )
     }
 }
