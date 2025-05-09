@@ -11,5 +11,5 @@ enum class ClothWeight {
 }
 
 enum class ClothType {
-    TOP, BOTTOM
+    TOP, BOTTOM, ACCESSORY
 }
