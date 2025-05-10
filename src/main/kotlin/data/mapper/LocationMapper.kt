@@ -1,7 +1,6 @@
 package org.example.data.mapper
 
 import org.example.data.dto.LocationDto
-import org.example.domain.exception.LocationExceptions
 import org.example.domain.entities.Location
 import org.example.domain.exception.NoLocationFoundException
 
