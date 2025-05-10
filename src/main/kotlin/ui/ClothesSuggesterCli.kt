@@ -1,10 +1,7 @@
 package org.example.ui
 
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.SupervisorJob
-import kotlinx.coroutines.async
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.*
+import kotlinx.coroutines.flow.first
 import org.example.domain.entities.ClothItem
 import org.example.ui.io.ConsoleIO
 import org.example.ui.utils.TextStyle
@@ -13,25 +10,22 @@ class ClothesSuggesterCli(
 	private val io: ConsoleIO,
 	private val presenter: ClothesSuggesterPresenter
 ) {
-	private val clothesSuggesterCliScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
 	fun start() {
 		printWelcome()
-		displayOptions()
+
+		var option: Int
 
 		do {
-			val option = getUserOption()
+			displayOptions()
+			option = getUserOption()
+
+			var shouldWaitForSuggestions = false
 			presenter.handleOptions(
 				option = option,
 				getCityAndCountryInput = { getUserCityAndCountry() },
 				onSuccess = {
-					clothesSuggesterCliScope.async {
-						presenter.clotheSuggesterUi
-							.collect {
-								displayLoading(isLoading = it.isLoading)
-								displayError(error = it.error)
-								displaySuggestions(clothes = it.suggestions)
-							}
-					}.onAwait
+					shouldWaitForSuggestions = true
+
 				},
 				onExit = {
 					io.printer.printText(
@@ -41,6 +35,22 @@ class ClothesSuggesterCli(
 					)
 				}
 			)
+
+			if (shouldWaitForSuggestions) {
+				runBlocking {
+					var lastSuggestions: List<ClothItem>? = null
+					presenter.clotheSuggesterUi
+						.collect {
+							displayLoading(isLoading = it.isLoading)
+							displayError(error = it.error)
+
+							if (it.suggestions != lastSuggestions && it.suggestions.isNotEmpty()) {
+								displaySuggestions(clothes = it.suggestions)
+								lastSuggestions = it.suggestions
+							}
+						}
+				}
+			}
 		} while (option != 0)
 	}
 
@@ -104,7 +114,7 @@ class ClothesSuggesterCli(
 
 	private fun displaySuggestions(clothes: List<ClothItem>) {
 		io.printer.printText(
-			text = "Based on today’s weather, you should consider wearing:",
+			text = "\nBased on today’s weather, you should consider wearing:",
 			textStyle = TextStyle.TITLE,
 		)
 
