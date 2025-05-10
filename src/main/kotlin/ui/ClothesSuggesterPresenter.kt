@@ -49,6 +49,7 @@ class ClothesSuggesterPresenter(
 	fun handleOptions(
 		option: Int,
 		getCityAndCountryInput: () -> Pair<String, String>,
+		onSuccess: () -> Unit,
 		onExit: () -> Unit
 	) {
 		when (option) {
@@ -58,6 +59,7 @@ class ClothesSuggesterPresenter(
 					city = cityCountryPair.first,
 					country = cityCountryPair.second
 				)
+				onSuccess()
 			}
 
 			0 -> {
